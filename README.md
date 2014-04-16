@@ -15,7 +15,7 @@ Version of the FIPS canister to build. Default is `2.0.5`
 
 ### `['openssl']['version']`
 
-Version of the OpenSSL product to build. Default is `1.0.1f`
+Version of the OpenSSL product to build. Default is `1.0.1g`
 
 ### `['openssl']['prefix']`
 
