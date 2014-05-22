@@ -1,37 +1,11 @@
-## Cookbook Name:: openssl_fips
+## Cookbook Name:: openssl_source
 ## Recipe:: default
 
-src_dirpath  = "#{Chef::Config['file_cache_path'] || '/tmp'}/openssl-fips-#{node['openssl_fips']['fips']['version']}"
+src_dirpath  = "#{Chef::Config['file_cache_path'] || '/tmp'}/openssl-#{node['openssl_source']['openssl']['version']}"
 src_filepath  = "#{src_dirpath}.tar.gz"
-remote_file node['openssl_fips']['fips']['url'] do
-  source   node['openssl_fips']['fips']['url']
-  checksum node['openssl_fips']['fips']['checksum']
-  path     src_filepath
-  backup   false
-end
-
-execute 'unarchive_fips' do
-  cwd  ::File.dirname(src_filepath)
-  command <<-EOH
-    tar zxf #{::File.basename(src_filepath)} -C #{::File.dirname(src_filepath)}
-    EOH
-  not_if { ::File.directory?(src_dirpath) }
-end
-
-fips_dirpath  = "#{Chef::Config['file_cache_path'] || '/tmp'}/openssl-fipsmodule-#{node['openssl_fips']['fips']['version']}"
-
-execute 'compile_fips_source' do
-  cwd     src_dirpath
-  command <<-EOH
-        ./config --prefix=#{fips_dirpath} && make && make install
-  EOH
-end
-
-src_dirpath  = "#{Chef::Config['file_cache_path'] || '/tmp'}/openssl-#{node['openssl_fips']['openssl']['version']}"
-src_filepath  = "#{src_dirpath}.tar.gz"
-remote_file node['openssl_fips']['openssl']['url'] do
-  source   node['openssl_fips']['openssl']['url']
-  checksum node['openssl_fips']['openssl']['checksum']
+remote_file node['openssl_source']['openssl']['url'] do
+  source   node['openssl_source']['openssl']['url']
+  checksum node['openssl_source']['openssl']['checksum']
   path     src_filepath
   backup   false
 end
@@ -42,29 +16,12 @@ execute 'unarchive_openssl' do
   not_if  { ::File.directory?(src_dirpath) }
 end
 
-cnf_patch_file = '/tmp/fips_mode.patch'
-cookbook_file 'fips_mode.patch' do
-  path cnf_patch_file
-end
-
-configure_flags = node['openssl_fips']['openssl']['configure_flags'].map { |x| x }
-configure_flags << "--prefix=#{node['openssl_fips']['openssl']['prefix']}"
-configure_flags << "fips" << "--with-fipsdir=#{fips_dirpath}"
+configure_flags = node['openssl_source']['openssl']['configure_flags'].map { |x| x }
+configure_flags << "--prefix=#{node['openssl_source']['openssl']['prefix']}"
 
 execute 'compile_openssl_source' do
   cwd  src_dirpath
   command <<-EOH
-    patch apps/openssl.cnf < #{cnf_patch_file}
     ./config #{configure_flags.join(' ')} && make && make install
   EOH
 end
-
-# update ld.so.conf
-file '/etc/ld.so.conf.d/openssl-fips.conf' do
-  mode     '0444'
-  content  "#{node['openssl_fips']['openssl']['prefix']}/lib"
-  notifies :run, 'execute[ldconfig]'
-end
-
-execute 'ldconfig'
-
