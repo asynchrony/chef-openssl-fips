@@ -33,9 +33,11 @@ by default in its `openssl.cnf`
 # License and Author
 
 Author:: [Alexander Merkulov][https://github.com/merqlove] (api@mrcr.ru)
+
 Author:: [Matt Campbell][https://github.com/xenolinguist] (matthew.campbell@asynchrony.com)
 
 Copyright:: 2014 MRCR
+
 Copyright:: 2014 Asynchrony
 
 Licensed under the Apache License, Version 2.0 (the "License");
