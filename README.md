@@ -32,9 +32,9 @@ by default in its `openssl.cnf`
 
 # License and Author
 
-Author:: [Alexander Merkulov][https://github.com/merqlove](api@mrcr.ru)
+Author:: [Alexander Merkulov](https://github.com/merqlove)
 
-Author:: [Matt Campbell][https://github.com/xenolinguist](matthew.campbell@asynchrony.com)
+Author:: [Matt Campbell](https://github.com/xenolinguist)
 
 Copyright:: 2014 MRCR
 
