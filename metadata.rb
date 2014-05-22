@@ -1,4 +1,4 @@
-name             'openssl'
+name             'openssl-source'
 maintainer       'Alexander Merkulov'
 maintainer_email 'api@mrcr.ru'
 license          'Apache 2.0'
