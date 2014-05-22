@@ -1,4 +1,4 @@
-# openssl-fips cookbook
+# openssl-source cookbook
 
 Installs/Configures OpenSSL from source
 
