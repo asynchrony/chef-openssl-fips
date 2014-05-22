@@ -25,3 +25,18 @@ execute 'compile_openssl_source' do
     ./config #{configure_flags.join(' ')} && make && make install
   EOH
 end
+
+# update ld.so.conf
+file '/etc/ld.so.conf.d/openssl.conf' do
+  mode     '0444'
+  content  "#{node['openssl_source']['openssl']['prefix']}/lib"
+  notifies :run, 'execute[ldconfig]'
+end
+
+execute 'ldconfig'
+
+profile_file = '/etc/profile/openssl.sh'
+cookbook_file 'openssl.sh' do
+  mode '0644'
+  path profile_file
+end
