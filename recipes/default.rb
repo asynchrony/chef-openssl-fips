@@ -25,6 +25,7 @@ execute 'compile_fips_source' do
   command <<-EOH
         ./config --prefix=#{fips_dirpath} && make && make install
   EOH
+  not_if { ::File.directory?(fips_dirpath) }
 end
 
 src_dirpath  = "#{Chef::Config['file_cache_path'] || '/tmp'}/openssl-#{node['openssl_fips']['openssl']['version']}"
@@ -57,6 +58,7 @@ execute 'compile_openssl_source' do
     patch apps/openssl.cnf < #{cnf_patch_file}
     ./config #{configure_flags.join(' ')} && make && make install
   EOH
+  not_if { ::File.directory?(node['openssl_fips']['openssl']['prefix']) }
 end
 
 # update ld.so.conf
