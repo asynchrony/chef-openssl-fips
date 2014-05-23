@@ -14,7 +14,7 @@ execute 'unarchive_fips' do
   cwd  ::File.dirname(src_filepath)
   command <<-EOH
     tar zxf #{::File.basename(src_filepath)} -C #{::File.dirname(src_filepath)}
-    EOH
+  EOH
   not_if { ::File.directory?(src_dirpath) }
 end
 
