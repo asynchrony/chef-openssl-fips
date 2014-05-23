@@ -24,7 +24,7 @@ execute 'compile_openssl_source' do
   command <<-EOH
     ./config #{configure_flags.join(' ')} && make && make install
   EOH
-  not_if { ::File.directory?(node['openssl_fips']['openssl']['prefix']) }
+  not_if { ::File.directory?(node['openssl_source']['openssl']['prefix']) }
 end
 
 # update ld.so.conf
