@@ -20,7 +20,7 @@ Version of the OpenSSL product to build. Default is `1.0.1g`
 ### `['openssl']['prefix']`
 
 Directory in which to install the completed OpenSSL product.
-Default is `/opt/openssl-1.0.1f`
+Default is `/opt/openssl-1.0.1g`
 
 ### `['openssl']['configure_flags']`
 
