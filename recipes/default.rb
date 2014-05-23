@@ -52,10 +52,10 @@ configure_flags = node['openssl_fips']['openssl']['configure_flags'].map { |x| x
 configure_flags << "--prefix=#{node['openssl_fips']['openssl']['prefix']}"
 configure_flags << "fips" << "--with-fipsdir=#{fips_dirpath}"
 
-execute 'compile_openssl_fips' do
+execute 'compile_openssl_source' do
   cwd  src_dirpath
   command <<-EOH
-  patch apps/openssl.cnf < #{cnf_patch_file}
+    patch apps/openssl.cnf < #{cnf_patch_file}
     ./config #{configure_flags.join(' ')} && make && make install
   EOH
   not_if { ::File.directory?(node['openssl_fips']['openssl']['prefix']) }
