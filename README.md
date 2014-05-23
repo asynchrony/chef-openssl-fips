@@ -1,13 +1,17 @@
-# openssl-source cookbook
+# openssl-fips cookbook
 
-Installs/Configures OpenSSL from source
+Installs/Configures OpenSSL from source with FIPS 140-2 mode enabled
 
 # Usage
 
-Include `recipe[openssl-source]` in your run_list and override the
+Include `recipe[openssl-fips]` in your run_list and override the
 defaults you want changed.
 
 # Attributes
+
+### `['fips']['version']`
+
+Version of the FIPS canister to build. Default is `2.0.5`
 
 ### `['openssl']['version']`
 
@@ -27,16 +31,12 @@ Defaults to `%W[ shared ]`
 
 ## default
 
-Compiles OpenSSL, installs it
+Compiles OpenSSL with the FIPS module, installs it, and enables fips_mode
 by default in its `openssl.cnf`
 
 # License and Author
 
-Author:: [Alexander Merkulov](https://github.com/merqlove)
-
-Author:: [Matt Campbell](https://github.com/xenolinguist)
-
-Copyright:: 2014 MRCR
+Author:: [Matt Campbell][https://github.com/xenolinguist] (matthew.campbell@asynchrony.com)
 
 Copyright:: 2014 Asynchrony
 
