@@ -68,3 +68,8 @@ end
 
 execute 'ldconfig'
 
+profile_file = '/etc/profile.d/openssl.sh'
+cookbook_file 'openssl.sh' do
+  mode '0644'
+  path profile_file
+end
