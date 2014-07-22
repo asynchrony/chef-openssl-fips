@@ -14,7 +14,7 @@ execute 'unarchive_fips' do
   cwd  ::File.dirname(src_filepath)
   command <<-EOH
     tar zxf #{::File.basename(src_filepath)} -C #{::File.dirname(src_filepath)}
-    EOH
+  EOH
   not_if { ::File.directory?(src_dirpath) }
 end
 
@@ -23,7 +23,7 @@ fips_dirpath = "#{Chef::Config['file_cache_path'] || '/tmp'}/openssl-fipsmodule-
 execute 'compile_fips_source' do
   cwd     src_dirpath
   command <<-EOH
-        ./config --prefix=#{fips_dirpath} && make && make install
+    ./config --prefix=#{fips_dirpath} && make && make install
   EOH
   not_if { ::File.directory?(fips_dirpath) }
 end
