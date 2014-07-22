@@ -8,6 +8,6 @@ version          '1.0.1'
 
 depends 'build-essential'
 
-%w{ubuntu debian centos redhat}.each do |os|
+%w(ubuntu debian centos redhat).each do |os|
   supports os
 end
