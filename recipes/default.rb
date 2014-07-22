@@ -14,7 +14,7 @@ execute 'unarchive_fips' do
   cwd  ::File.dirname(src_filepath)
   command <<-EOH
     tar zxf #{::File.basename(src_filepath)} -C #{::File.dirname(src_filepath)}
-  EOH
+    EOH
   not_if { ::File.directory?(src_dirpath) }
 end
 
@@ -63,7 +63,9 @@ end
 
 # update ld.so.conf
 file '/etc/ld.so.conf.d/openssl-fips.conf' do
-  mode     '0444'
+  mode     00444
+  owner    "root"
+  group    "root"
   content  "#{node['openssl_fips']['openssl']['prefix']}/lib"
   notifies :run, 'execute[ldconfig]'
 end
@@ -71,7 +73,9 @@ end
 execute 'ldconfig'
 
 profile_file = '/etc/profile.d/openssl.sh'
-cookbook_file 'openssl.sh' do
-  mode '0644'
-  path profile_file
+template profile_file do
+  owner  "root"
+  group  "root"
+  mode   00644
+  source 'openssl.sh.erb'
 end
