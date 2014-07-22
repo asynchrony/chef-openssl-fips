@@ -2,7 +2,7 @@
 ## Recipe:: default
 
 src_dirpath  = "#{Chef::Config['file_cache_path'] || '/tmp'}/openssl-fips-#{node['openssl_fips']['fips']['version']}"
-src_filepath  = "#{src_dirpath}.tar.gz"
+src_filepath = "#{src_dirpath}.tar.gz"
 remote_file node['openssl_fips']['fips']['url'] do
   source   node['openssl_fips']['fips']['url']
   checksum node['openssl_fips']['fips']['checksum']
@@ -18,7 +18,7 @@ execute 'unarchive_fips' do
   not_if { ::File.directory?(src_dirpath) }
 end
 
-fips_dirpath  = "#{Chef::Config['file_cache_path'] || '/tmp'}/openssl-fipsmodule-#{node['openssl_fips']['fips']['version']}"
+fips_dirpath = "#{Chef::Config['file_cache_path'] || '/tmp'}/openssl-fipsmodule-#{node['openssl_fips']['fips']['version']}"
 
 execute 'compile_fips_source' do
   cwd     src_dirpath
@@ -29,7 +29,7 @@ execute 'compile_fips_source' do
 end
 
 src_dirpath  = "#{Chef::Config['file_cache_path'] || '/tmp'}/openssl-#{node['openssl_fips']['openssl']['version']}"
-src_filepath  = "#{src_dirpath}.tar.gz"
+src_filepath = "#{src_dirpath}.tar.gz"
 remote_file node['openssl_fips']['openssl']['url'] do
   source   node['openssl_fips']['openssl']['url']
   checksum node['openssl_fips']['openssl']['checksum']
@@ -50,7 +50,7 @@ end
 
 configure_flags = node['openssl_fips']['openssl']['configure_flags'].map { |x| x }
 configure_flags << "--prefix=#{node['openssl_fips']['openssl']['prefix']}"
-configure_flags << "fips" << "--with-fipsdir=#{fips_dirpath}"
+configure_flags << 'fips' << "--with-fipsdir=#{fips_dirpath}"
 
 execute 'compile_openssl_source' do
   cwd  src_dirpath
@@ -64,8 +64,8 @@ end
 # update ld.so.conf
 file '/etc/ld.so.conf.d/openssl-fips.conf' do
   mode     00444
-  owner    "root"
-  group    "root"
+  owner    'root'
+  group    'root'
   content  "#{node['openssl_fips']['openssl']['prefix']}/lib"
   notifies :run, 'execute[ldconfig]'
 end
@@ -74,8 +74,8 @@ execute 'ldconfig'
 
 profile_file = '/etc/profile.d/openssl.sh'
 template profile_file do
-  owner  "root"
-  group  "root"
+  owner  'root'
+  group  'root'
   mode   00644
   source 'openssl.sh.erb'
 end
