@@ -36,7 +36,7 @@ by default in its `openssl.cnf`
 
 # License and Author
 
-Author:: [Matt Campbell][https://github.com/xenolinguist] (matthew.campbell@asynchrony.com)
+Author:: [Matt Campbell](https://github.com/xenolinguist) (matthew.campbell@asynchrony.com)
 
 Copyright:: 2014 Asynchrony
 
